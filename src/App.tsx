@@ -1,24 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
+import { AddTodoItem } from './components/AddTodoItem';
+
+import type { ITodo } from './interfaces';
+
+const ESCAPE_KEY = 'Escape';
+const NAMESPACE = 'todoApp';
+
 function App() {
+  const [allTodos, setAllTodos] = useState<Array<ITodo>>([]);
+  const [activeTodos, setActiveTodos] = useState<Array<ITodo>>([]);
+  const [completedTodos, setCompletedTodos] = useState<Array<ITodo>>([]);
+
+  useEffect(() => {
+    const store = localStorage.getItem(NAMESPACE);
+    setAllTodos(store ? JSON.parse(store) : []);
+
+    const active: ITodo[] = [];
+    const completed: ITodo[] = [];
+    for (const todo of allTodos) {
+      if (todo.completed) {
+        completed.push(todo);
+      } else {
+        active.push(todo);
+      }
+    }
+    setActiveTodos(active);
+    setCompletedTodos(completed);
+  }, [allTodos]); 
+
+  const addTodo = (newTodo: string): void => {
+    setAllTodos(prev => [...prev, {
+      timestamp: Date.now(),
+      text: newTodo,
+      completed: false
+    }]);
+    localStorage.setItem(NAMESPACE, JSON.stringify(allTodos));
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AddTodoItem {...{addTodo}} />
     </div>
   );
 }
