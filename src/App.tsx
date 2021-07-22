@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 
 import { AddTodoItem } from './components/AddTodoItem';
+import { TodoItem } from './components/TodoItem';
 
 import type { ITodo } from './interfaces';
+import { NAMESPACE } from './constants';
 
-const ESCAPE_KEY = 'Escape';
-const NAMESPACE = 'todoApp';
 
 function App() {
   const [allTodos, setAllTodos] = useState<Array<ITodo>>([]);
@@ -16,7 +16,9 @@ function App() {
   useEffect(() => {
     const store = localStorage.getItem(NAMESPACE);
     setAllTodos(store ? JSON.parse(store) : []);
+  }, []);
 
+  useEffect(() => {
     const active: ITodo[] = [];
     const completed: ITodo[] = [];
     for (const todo of allTodos) {
@@ -28,20 +30,71 @@ function App() {
     }
     setActiveTodos(active);
     setCompletedTodos(completed);
-  }, [allTodos]); 
+  }, [allTodos]);
+
+  const updateStateAndStorage = (updatedTodos: ITodo[]): void => {
+    setAllTodos(updatedTodos);
+    localStorage.setItem(NAMESPACE, JSON.stringify(updatedTodos));
+  }
 
   const addTodo = (newTodo: string): void => {
-    setAllTodos(prev => [...prev, {
+    const updatedTodos = [...allTodos, {
       timestamp: Date.now(),
       text: newTodo,
       completed: false
-    }]);
-    localStorage.setItem(NAMESPACE, JSON.stringify(allTodos));
+    }];
+    updateStateAndStorage(updatedTodos);
+  }
+
+  const toggleTodoState = (timestamp: number): void => {
+    const updatedTodos = allTodos.map(todo => {
+      if (todo.timestamp !== timestamp) {
+        return todo;
+      } else {
+        todo.completed = !todo.completed
+        return todo;
+      }
+    });
+    updateStateAndStorage(updatedTodos);
+  }
+
+  const editTodo = (timestamp: number, newText: string): void => {
+    const updatedTodos = allTodos.map(todo => {
+      if (todo.timestamp !== timestamp) {
+        return todo;
+      } else {
+        todo.text = newText;
+        console.dir(todo);
+        return todo;
+      }
+    });
+    updateStateAndStorage(updatedTodos);
+  }
+
+  const deleteTodo = (timestamp: number): void => {
+    const remainingTodos = allTodos.filter(todo => todo.timestamp !== timestamp);
+    updateStateAndStorage(remainingTodos);
   }
 
   return (
     <div className="App">
-      <AddTodoItem {...{addTodo}} />
+      <AddTodoItem {...{ addTodo }} />
+      <ul className='TodoList'>
+        {activeTodos.map(todo =>
+          <TodoItem key={todo.timestamp} {...{
+            todo,
+            toggleTodoState,
+            editTodo,
+            deleteTodo,
+          }} />)}
+        {completedTodos.map(todo =>
+          <TodoItem key={todo.timestamp} {...{
+            todo,
+            toggleTodoState,
+            editTodo,
+            deleteTodo
+          }} />)}
+      </ul>
     </div>
   );
 }
