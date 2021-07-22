@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const ENTER_KEY = 'Enter';
+import { ENTER_KEY } from '../constants';
 
 function AddTodoItem({ addTodo }: IAddTodoItemProps) {
   const [newTodo, setNewTodo] = useState<string>('');
@@ -12,7 +12,7 @@ function AddTodoItem({ addTodo }: IAddTodoItemProps) {
     
     event.preventDefault();
     
-    addTodo(newTodo);
+    addTodo(newTodo.trim());
     setNewTodo('');
   }
 
