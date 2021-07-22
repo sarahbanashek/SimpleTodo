@@ -46,7 +46,6 @@ function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProp
         />
         <label
           className='TodoItem-view-text'
-          onDoubleClick={() => setEditingText(true)}
           hidden={editingText}
         >
           {todoText}
@@ -61,9 +60,17 @@ function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProp
           onBlur={() => handleBlur()}
         />
         <button
+          className='TodoItem-view-edit'
+          onClick={() => setEditingText(true)}
+        >
+          <span className='material-icons'>edit</span>
+        </button>
+        <button
           className='TodoItem-view-delete'
           onClick={() => deleteTodo(todo.timestamp)}
-        >delete</button>
+        >
+          <span className='material-icons'>delete_forever</span>
+        </button>
       </div>
     </li>
   );

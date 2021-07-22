@@ -5,15 +5,17 @@ import { ENTER_KEY } from '../constants';
 function AddTodoItem({ addTodo }: IAddTodoItemProps) {
   const [newTodo, setNewTodo] = useState<string>('');
 
+  const submitNewTodo = (): void => {
+    addTodo(newTodo.trim());
+    setNewTodo('');
+  }
+
   const handleEnterKeyDown = (event: React.KeyboardEvent) => {
     if (event.key !== ENTER_KEY || newTodo === '') {
       return;
     }
-    
     event.preventDefault();
-    
-    addTodo(newTodo.trim());
-    setNewTodo('');
+    submitNewTodo();
   }
 
   return (
@@ -25,6 +27,13 @@ function AddTodoItem({ addTodo }: IAddTodoItemProps) {
         onChange={e => setNewTodo(e.target.value)}
         value={newTodo}
       />
+      <button
+        type='button'
+        className='AddTodoItem-addButton'
+        onClick={() => submitNewTodo()}
+      >
+      <span className='material-icons'>add</span>
+      </button>
     </div>
   );
 }
