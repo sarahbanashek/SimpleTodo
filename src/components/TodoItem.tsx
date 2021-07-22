@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import type { ITodo } from '../interfaces';
 import { ENTER_KEY, ESCAPE_KEY } from '../constants';
@@ -6,6 +6,8 @@ import { ENTER_KEY, ESCAPE_KEY } from '../constants';
 function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProps) {
   const [todoText, setTodoText] = useState<string>(todo.text);
   const [editingText, setEditingText] = useState<boolean>(false);
+
+  const textInput = useRef<HTMLInputElement>(null);
 
   const classNames = todo.completed
     ? 'TodoItem TodoItem--completed'
@@ -34,9 +36,19 @@ function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProp
     setEditingText(false);
     setTodoText(todo.text);
   }
+
+  const handleEditButtonClick = (): void => {
+    setEditingText(true);
+    window.setTimeout(() => {
+      if (textInput.current !== null) {
+        console.log(textInput.current);
+        textInput.current.focus();
+      }
+    }, 0);
+  }
   
   return (
-    <li className={classNames} key={todo.timestamp}>
+    <li className={classNames}>
       <div className='TodoItem-view'>
         <input
           className='TodoItem-view-toggle'
@@ -51,17 +63,17 @@ function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProp
           {todoText}
         </label>
         <input
-          className='TodoItem-view-text-input'
+          className='TodoItem-view-text-editInput'
           type={editingText ? 'input' : 'hidden'}
           value={todoText}
-          autoFocus
+          ref={textInput}
           onChange={e => setTodoText(e.target.value)}
           onKeyDown={e => handleKeyDown(e)}
           onBlur={() => handleBlur()}
         />
         <button
-          className='TodoItem-view-edit'
-          onClick={() => setEditingText(true)}
+          className='TodoItem-view-editButton'
+          onClick={() => handleEditButtonClick()}
         >
           <span className='material-icons'>edit</span>
         </button>
