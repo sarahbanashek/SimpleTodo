@@ -4,6 +4,7 @@ import './App.css';
 import { AddTodoItem } from './components/AddTodoItem';
 import { MarkAllComplete } from './components/MarkAllComplete';
 import { TodoItem } from './components/TodoItem';
+import { Footer } from './components/Footer';
 
 import type { ITodo } from './interfaces';
 import { NAMESPACE } from './constants';
@@ -13,6 +14,8 @@ function App() {
   const [allTodos, setAllTodos] = useState<Array<ITodo>>([]);
   const [activeTodos, setActiveTodos] = useState<Array<ITodo>>([]);
   const [completedTodos, setCompletedTodos] = useState<Array<ITodo>>([]);
+  const [showActiveTodos, setShowActiveTodos] = useState<boolean>(true);
+  const [showCompletedTodos, setShowCompletedTodos] = useState<boolean>(true);
 
   useEffect(() => {
     const store = localStorage.getItem(NAMESPACE);
@@ -85,6 +88,10 @@ function App() {
     updateStateAndStorage(remainingTodos);
   }
 
+  const deleteAllCompleted = (): void => {
+    updateStateAndStorage(activeTodos);
+  }
+
   return (
     <div className='App'>
       <header className='header'>
@@ -98,22 +105,36 @@ function App() {
           : null
         }
         <ul className='TodoList'>
-          {activeTodos.map(todo =>
-            <TodoItem key={todo.timestamp} {...{
-              todo,
-              toggleTodoState,
-              editTodo,
-              deleteTodo,
-            }} />)}
-          {completedTodos.map(todo =>
-            <TodoItem key={todo.timestamp} {...{
-              todo,
-              toggleTodoState,
-              editTodo,
-              deleteTodo
-            }} />)}
+          {showActiveTodos
+            ? activeTodos.map(todo =>
+              <TodoItem key={todo.timestamp} {...{
+                todo,
+                toggleTodoState,
+                editTodo,
+                deleteTodo,
+              }} />)
+            : null}
+          {showCompletedTodos
+            ? completedTodos.map(todo =>
+              <TodoItem key={todo.timestamp} {...{
+                todo,
+                toggleTodoState,
+                editTodo,
+                deleteTodo
+              }} />)
+            : null}
         </ul>
       </section>
+
+      <Footer {...{
+        numActive: activeTodos.length,
+        numCompleted: completedTodos.length,
+        showActiveTodos,
+        setShowActiveTodos,
+        showCompletedTodos,
+        setShowCompletedTodos,
+        deleteAllCompleted
+      }} />
     </div>
   );
 }
