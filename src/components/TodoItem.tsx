@@ -53,6 +53,7 @@ function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProp
         <input
           className='TodoItem-view-toggle'
           type='checkbox'
+          aria-label='Mark todo item as completed'
           checked={todo.completed}
           onChange={() => toggleTodoState(todo.timestamp)}
         />
@@ -65,6 +66,7 @@ function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProp
         <input
           className='TodoItem-view-text-editInput'
           type={editingText ? 'input' : 'hidden'}
+          aria-label='Edit todo text'
           value={todoText}
           ref={textInput}
           onChange={e => setTodoText(e.target.value)}
@@ -73,12 +75,14 @@ function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProp
         />
         <button
           className='TodoItem-view-editButton'
+          aria-label='Edit this todo item'
           onClick={() => handleEditButtonClick()}
         >
           <span className='material-icons'>edit</span>
         </button>
         <button
           className='TodoItem-view-delete'
+          aria-label='Permanently delete this todo item'
           onClick={() => deleteTodo(todo.timestamp)}
         >
           <span className='material-icons'>delete_forever</span>
