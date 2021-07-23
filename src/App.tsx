@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 
 import { AddTodoItem } from './components/AddTodoItem';
+import { MarkAllComplete } from './components/MarkAllComplete';
 import { TodoItem } from './components/TodoItem';
 
 import type { ITodo } from './interfaces';
@@ -46,6 +47,14 @@ function App() {
     updateStateAndStorage(updatedTodos);
   }
 
+  const markAllComplete = (): void => {
+    const updatedTodos = activeTodos.map(todo => {
+      todo.completed = true;
+      return todo;
+    }).concat(completedTodos);
+    updateStateAndStorage(updatedTodos);
+  }
+
   const toggleTodoState = (timestamp: number): void => {
     const updatedTodos = allTodos.map(todo => {
       if (todo.timestamp !== timestamp) {
@@ -77,24 +86,34 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <AddTodoItem {...{ addTodo }} />
-      <ul className='TodoList'>
-        {activeTodos.map(todo =>
-          <TodoItem key={todo.timestamp} {...{
-            todo,
-            toggleTodoState,
-            editTodo,
-            deleteTodo,
-          }} />)}
-        {completedTodos.map(todo =>
-          <TodoItem key={todo.timestamp} {...{
-            todo,
-            toggleTodoState,
-            editTodo,
-            deleteTodo
-          }} />)}
-      </ul>
+    <div className='App'>
+      <header className='header'>
+        <h1>Todos</h1>
+        <AddTodoItem {...{ addTodo }} />
+      </header>
+
+      <section className='TodoBody'>
+        {activeTodos.length > 0
+          ? <MarkAllComplete {...{ markAllComplete }} />
+          : null
+        }
+        <ul className='TodoList'>
+          {activeTodos.map(todo =>
+            <TodoItem key={todo.timestamp} {...{
+              todo,
+              toggleTodoState,
+              editTodo,
+              deleteTodo,
+            }} />)}
+          {completedTodos.map(todo =>
+            <TodoItem key={todo.timestamp} {...{
+              todo,
+              toggleTodoState,
+              editTodo,
+              deleteTodo
+            }} />)}
+        </ul>
+      </section>
     </div>
   );
 }
