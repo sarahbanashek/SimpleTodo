@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 
 import type { ITodo } from '../interfaces';
 import { ENTER_KEY, ESCAPE_KEY } from '../constants';
-import { noXSS } from '../noXSS';
 
 function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProps) {
   const [todoText, setTodoText] = useState<string>(todo.text);
@@ -16,10 +15,7 @@ function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProp
   
   const submitUpdatedTodo = (): void => {
     if (todoText.trim() !== todo.text) {
-      // Preventing XSS attacks for hosted demo
-      const safeTodo = noXSS(todoText);
-      
-      editTodo(todo.timestamp, safeTodo.trim());
+      editTodo(todo.timestamp, todoText.trim());
     }
   }
 
@@ -30,15 +26,13 @@ function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProp
       event.preventDefault();
 
       submitUpdatedTodo();
+      setEditingText(false);
+      setTodoText(todo.text);
     }
-
-    setEditingText(false);
-    setTodoText(todo.text);
   }
 
   const handleBlur = (): void => {
     submitUpdatedTodo();
-
     setEditingText(false);
     setTodoText(todo.text);
   }
