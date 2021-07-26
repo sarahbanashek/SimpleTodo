@@ -1,12 +1,16 @@
 import { useState } from 'react';
 
 import { ENTER_KEY } from '../constants';
+import { noXSS } from '../noXSS';
 
 function AddTodoItem({ addTodo }: IAddTodoItemProps) {
   const [newTodo, setNewTodo] = useState<string>('');
 
   const submitNewTodo = (): void => {
-    addTodo(newTodo.trim());
+  // Preventing XSS attacks for hosted demo
+    const safeTodo = noXSS(newTodo);
+    
+    addTodo(safeTodo.trim());
     setNewTodo('');
   }
 

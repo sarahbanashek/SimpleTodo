@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 
 import type { ITodo } from '../interfaces';
 import { ENTER_KEY, ESCAPE_KEY } from '../constants';
+import { noXSS } from '../noXSS';
 
 function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProps) {
   const [todoText, setTodoText] = useState<string>(todo.text);
@@ -12,6 +13,15 @@ function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProp
   const classNames = todo.completed
     ? 'TodoItem TodoItem--completed'
     : 'TodoItem TodoItem--active';
+  
+  const submitUpdatedTodo = (): void => {
+    if (todoText.trim() !== todo.text) {
+      // Preventing XSS attacks for hosted demo
+      const safeTodo = noXSS(todoText);
+      
+      editTodo(todo.timestamp, safeTodo.trim());
+    }
+  }
 
   const handleKeyDown = (event: React.KeyboardEvent): void => {
     if (event.key !== ESCAPE_KEY && event.key !== ENTER_KEY) {
@@ -19,9 +29,7 @@ function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProp
     } else if (event.key === ENTER_KEY) {
       event.preventDefault();
 
-      if (todoText.trim() !== todo.text) {
-        editTodo(todo.timestamp, todoText.trim());
-      }
+      submitUpdatedTodo();
     }
 
     setEditingText(false);
@@ -29,9 +37,7 @@ function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProp
   }
 
   const handleBlur = (): void => {
-    if (todoText.trim() !== todo.text) {
-      editTodo(todo.timestamp, todoText.trim());
-    }
+    submitUpdatedTodo();
 
     setEditingText(false);
     setTodoText(todo.text);
