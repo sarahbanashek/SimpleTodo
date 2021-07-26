@@ -1,38 +1,80 @@
 .App {
   text-align: center;
+  width: 90%;
+  margin: auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.TodoBody {
+  margin: 30px auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.AddTodoItem {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  width: 85%;
+  margin: 30px auto;
 }
 
-.App-link {
-  color: #61dafb;
+.AddTodoItem-input {
+  width: 80%;
+  margin-right: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.AddTodoItem-addButton {
+  max-width: 32px;
+  max-height: 32px;
+}
+
+.icon-button, .completeOrDeleteButton {
+  background-color: transparent;
+  border: none;
+}
+
+.icon-button:hover, .completeOrDeleteButton:hover {
+  background-color: #ECEFF1;
+  border-radius: 3px;
+}
+
+.TodoItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 391px;
+}
+
+input[type=checkbox] {
+  margin-right: 10px;
+}
+
+.TodoItem--completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.Footer {
+  margin-bottom: 25px;
+  font-size: small;
+}
+
+.Footer-todoCounts, .Footer-toggleShow, .Footer-completeOrDeleteButtons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 26px;
+  margin: 5px auto;
+}
+
+.completeOrDeleteButton {
+  display: flex;
+  align-items: center;
+}
+
+.Footer-button-icon {
+  margin-left: 5px;
 }

@@ -121,6 +121,8 @@ function App() {
         </div>
       </section>
 
+      <hr/>
+
       <Footer {...{
         numActive: activeTodos.length,
         numCompleted: completedTodos.length,

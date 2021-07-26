@@ -22,14 +22,14 @@ function AddTodoItem({ addTodo }: IAddTodoItemProps) {
     <div className='AddTodoItem'>
       <input
         className='AddTodoItem-input'
-        placeholder='Add a task'
+        placeholder='New task'
         onKeyDown={e => handleEnterKeyDown(e)}
         onChange={e => setNewTodo(e.target.value)}
         value={newTodo}
       />
       <button
         type='button'
-        className='AddTodoItem-addButton'
+        className='AddTodoItem-addButton icon-button'
         onClick={() => submitNewTodo()}
       >
       <span className='material-icons'>add</span>

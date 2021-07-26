@@ -12,7 +12,7 @@ function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProp
   const classNames = todo.completed
     ? 'TodoItem TodoItem--completed'
     : 'TodoItem TodoItem--active';
-  
+
   const handleKeyDown = (event: React.KeyboardEvent): void => {
     if (event.key !== ESCAPE_KEY && event.key !== ENTER_KEY) {
       return;
@@ -46,25 +46,27 @@ function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProp
       }
     }, 0);
   }
-  
+
   return (
-    <li className={classNames}>
-      <div className='TodoItem-view'>
+    <div className={classNames}>
+      <div className='TodoItem-checkboxAndText'>
         <input
-          className='TodoItem-view-toggle'
+          className='TodoItem-checkboxAndText-toggleCompleted'
+          id={`mark-completed-checkbox-${todo.timestamp}`}
           type='checkbox'
           aria-label='Mark todo item as completed'
           checked={todo.completed}
           onChange={() => toggleTodoState(todo.timestamp)}
         />
         <label
-          className='TodoItem-view-text'
+          className='TodoItem-checkboxAndText-text'
+          htmlFor={`mark-completed-checkbox-${todo.timestamp}`}
           hidden={editingText}
         >
           {todoText}
         </label>
         <input
-          className='TodoItem-view-text-editInput'
+          className='TodoItem-checkboxAndText-text-editInput'
           type={editingText ? 'input' : 'hidden'}
           aria-label='Edit todo text'
           value={todoText}
@@ -73,22 +75,25 @@ function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProp
           onKeyDown={e => handleKeyDown(e)}
           onBlur={() => handleBlur()}
         />
+      </div>
+
+      <div className='TodoItem-buttons'>
         <button
-          className='TodoItem-view-editButton'
+          className='TodoItem-buttons-editButton icon-button'
           aria-label='Edit this todo item'
           onClick={() => handleEditButtonClick()}
         >
           <span className='material-icons'>edit</span>
         </button>
         <button
-          className='TodoItem-view-delete'
+          className='TodoItem-buttons-delete icon-button'
           aria-label='Permanently delete this todo item'
           onClick={() => deleteTodo(todo.timestamp)}
         >
           <span className='material-icons'>delete_forever</span>
         </button>
       </div>
-    </li>
+    </div>
   );
 }
 
