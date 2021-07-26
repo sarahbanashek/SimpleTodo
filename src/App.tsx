@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 
 import { AddTodoItem } from './components/AddTodoItem';
-import { MarkAllComplete } from './components/MarkAllComplete';
 import { TodoItem } from './components/TodoItem';
 import { Footer } from './components/Footer';
 
@@ -96,15 +95,11 @@ function App() {
     <div className='App'>
       <header className='header'>
         <h1>Todos</h1>
-        <AddTodoItem {...{ addTodo }} />
       </header>
 
       <section className='TodoBody'>
-        {activeTodos.length > 0
-          ? <MarkAllComplete {...{ markAllComplete }} />
-          : null
-        }
-        <ul className='TodoList'>
+        <AddTodoItem {...{ addTodo }} />
+        <div className='TodoList'>
           {showActiveTodos
             ? activeTodos.map(todo =>
               <TodoItem key={todo.timestamp} {...{
@@ -123,7 +118,7 @@ function App() {
                 deleteTodo
               }} />)
             : null}
-        </ul>
+        </div>
       </section>
 
       <Footer {...{
@@ -133,6 +128,7 @@ function App() {
         setShowActiveTodos,
         showCompletedTodos,
         setShowCompletedTodos,
+        markAllComplete,
         deleteAllCompleted
       }} />
     </div>

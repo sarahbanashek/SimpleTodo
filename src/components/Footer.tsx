@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Footer({ numActive, numCompleted, showActiveTodos, setShowActiveTodos, showCompletedTodos, setShowCompletedTodos, deleteAllCompleted }: IFooterProps) {
+function Footer({ numActive, numCompleted, showActiveTodos, setShowActiveTodos, showCompletedTodos, setShowCompletedTodos, markAllComplete, deleteAllCompleted }: IFooterProps) {
   return (
     <div className='Footer'>
       {numActive > 0
@@ -36,24 +36,35 @@ function Footer({ numActive, numCompleted, showActiveTodos, setShowActiveTodos, 
         : null}
 
       <p className='Footer-activeCount'>
-        {numActive} active todos
+        {numActive} active {numActive === 1 ? 'todo' : 'todos'}
       </p>
 
       <p className='Footer-completedCount'>
-        {numCompleted} completed todos
+        {numCompleted} completed {numCompleted === 1 ? 'todo' : 'todos'}
       </p>
 
-      {showCompletedTodos
+      {showActiveTodos && numActive > 0
         ? (
-          <div className='Footer-deleteAllCompleted'>
+          <button
+            type='button'
+            className='Footer-markAllCompleteButton complete-or-delete'
+            onClick={() => markAllComplete()}
+          >
+            <span className='Footer-markAllCompleteButton-text'>Mark all as complete</span>
+            <span className='Footer-markAllCompleteButton-icon material-icons'>done</span>
+          </button>
+        ) : null}
+
+      {showCompletedTodos && numCompleted > 0
+        ? (
             <button
               type='button'
-              className='Footer-deleteAllCompleted-button'
+              className='Footer-deleteAllCompletedButton complete-or-delete'
               onClick={() => deleteAllCompleted()}
-            >
-              delete all completed todos
+          >
+            <span className='Footer-deleteAllCompletedButton-text'>delete all completed todos</span>
+            <span className='Footer-deleteAllCompletedButton-icon material-icons'>delete_forever</span>
             </button>
-          </div>
         ) : null}
     </div>
   );
@@ -66,6 +77,7 @@ interface IFooterProps {
   setShowActiveTodos: React.Dispatch<React.SetStateAction<boolean>>,
   showCompletedTodos: boolean,
   setShowCompletedTodos: React.Dispatch<React.SetStateAction<boolean>>,
+  markAllComplete: () => void,
   deleteAllCompleted: () => void
 }
 
