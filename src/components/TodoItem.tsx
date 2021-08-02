@@ -63,23 +63,27 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
           checked={todo.completed}
           onChange={() => toggleTodoState(todo.timestamp)}
         />
-        <label
-          className='TodoItem-checkboxAndText-text'
-          htmlFor={`mark-completed-checkbox-${todo.timestamp}`}
-          hidden={editingText}
-        >
-          {todoText}
-        </label>
+
+        {editingText
+          ? (
         <input
           className='TodoItem-checkboxAndText-text-editInput'
-          type={editingText ? 'input' : 'hidden'}
+              type='input'
           aria-label='Edit todo text'
           value={todoText}
           ref={textInput}
           onChange={e => setTodoText(e.target.value)}
           onKeyDown={e => handleKeyDown(e)}
           onBlur={() => handleBlur()}
-        />
+            />)
+          : (
+            <label
+              className='TodoItem-checkboxAndText-text'
+              htmlFor={`mark-completed-checkbox-${todo.timestamp}`}
+            >
+              {todoText}
+            </label>
+          )}
       </div>
 
       <div className='TodoItem-buttons'>
