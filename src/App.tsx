@@ -5,14 +5,14 @@ import { AddTodoItem } from './components/AddTodoItem';
 import { TodoItem } from './components/TodoItem';
 import { Footer } from './components/Footer';
 
-import type { ITodo } from './interfaces';
+import type { Todo } from './interfaces';
 import { NAMESPACE } from './constants';
 
 
 function App() {
-  const [allTodos, setAllTodos] = useState<Array<ITodo>>([]);
-  const [activeTodos, setActiveTodos] = useState<Array<ITodo>>([]);
-  const [completedTodos, setCompletedTodos] = useState<Array<ITodo>>([]);
+  const [allTodos, setAllTodos] = useState<Array<Todo>>([]);
+  const [activeTodos, setActiveTodos] = useState<Array<Todo>>([]);
+  const [completedTodos, setCompletedTodos] = useState<Array<Todo>>([]);
   const [showActiveTodos, setShowActiveTodos] = useState<boolean>(true);
   const [showCompletedTodos, setShowCompletedTodos] = useState<boolean>(true);
 
@@ -38,7 +38,7 @@ function App() {
     setCompletedTodos(allTodos.filter(t => t.completed));
   }, [allTodos]);
 
-  const updateStateAndStorage = (updatedTodos: ITodo[]): void => {
+  const updateStateAndStorage = (updatedTodos: Todo[]): void => {
     setAllTodos(updatedTodos);
     localStorage.setItem(NAMESPACE, JSON.stringify(updatedTodos));
   }

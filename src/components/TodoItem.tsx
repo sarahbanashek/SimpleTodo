@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-import type { ITodo } from '../interfaces';
-import { ENTER_KEY, ESCAPE_KEY } from '../constants';
+import type { Todo } from '../interfaces';
 
 function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProps) {
   const [todoText, setTodoText] = useState<string>(todo.text);
@@ -98,7 +97,7 @@ function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProp
 }
 
 interface ITodoItemProps {
-  todo: ITodo;
+  todo: Todo;
   toggleTodoState: (timestamp: number) => void;
   editTodo: (timestamp: number, newText: string) => void;
   deleteTodo: (timestamp: number) => void;
