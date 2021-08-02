@@ -16,6 +16,8 @@ This simple todo app allows users to add, edit, and mark their todo tasks as com
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Inspired by [TypeScript & React TodoMVC Example](https://github.com/tastejs/todomvc/tree/gh-pages/examples/typescript-react).
+
 ## Available Scripts
 
 In the project directory, you can run:
