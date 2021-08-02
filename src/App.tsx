@@ -22,17 +22,20 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const active: ITodo[] = [];
-    const completed: ITodo[] = [];
-    for (const todo of allTodos) {
-      if (todo.completed) {
-        completed.push(todo);
-      } else {
-        active.push(todo);
-      }
-    }
-    setActiveTodos(active);
-    setCompletedTodos(completed);
+    // const active: Todo[] = [];
+    // const completed: Todo[] = [];
+    // for (const todo of allTodos) {
+    //   if (todo.completed) {
+    //     completed.push(todo);
+    //   } else {
+    //     active.push(todo);
+    //   }
+    // }
+    // setActiveTodos(active);
+    // setCompletedTodos(completed);
+
+    setActiveTodos(allTodos.filter(t => !t.completed));
+    setCompletedTodos(allTodos.filter(t => t.completed));
   }, [allTodos]);
 
   const updateStateAndStorage = (updatedTodos: ITodo[]): void => {
@@ -42,7 +45,7 @@ function App() {
 
   const addTodo = (newTodo: string): void => {
     const updatedTodos = [...allTodos, {
-      timestamp: Date.now(),
+      timestamp: Date.now(), // *createdAt
       text: newTodo,
       completed: false
     }];
@@ -50,11 +53,12 @@ function App() {
   }
 
   const markAllComplete = (): void => {
-    const updatedTodos = activeTodos.map(todo => {
-      todo.completed = true;
-      return todo;
-    }).concat(completedTodos);
-    updateStateAndStorage(updatedTodos);
+    // const updatedTodos = activeTodos.map(todo => {
+    //   todo.completed = true;
+    //   return todo;
+    // }).concat(completedTodos);
+    // updateStateAndStorage(updatedTodos);
+    updateStateAndStorage(allTodos.map(todo => ({ ...todo, completed: true })));
   }
 
   const toggleTodoState = (timestamp: number): void => {
@@ -75,7 +79,6 @@ function App() {
         return todo;
       } else {
         todo.text = newText;
-        console.dir(todo);
         return todo;
       }
     });
@@ -84,7 +87,7 @@ function App() {
 
   const deleteTodo = (timestamp: number): void => {
     const remainingTodos = allTodos.filter(todo => todo.timestamp !== timestamp);
-    updateStateAndStorage(remainingTodos);
+    updateStateAndStorage(remainingTodos); // *
   }
 
   const deleteAllCompleted = (): void => {
