@@ -82,9 +82,9 @@ function App() {
         <h1>Todos</h1>
       </header>
 
-      <section className='TodoBody'>
+      <section className='todo-body'>
         <AddTodoItem {...{ addTodo }} />
-        <div className='TodoList'>
+        <div className='todo-list'>
           {showActiveTodos
             ? activeTodos.map(todo =>
               <TodoItem key={todo.timestamp} {...{
