@@ -2,9 +2,14 @@ import React, { useRef, useState } from 'react';
 
 import type { Todo } from '../interfaces';
 
-function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: ITodoItemProps) {
-  const [todoText, setTodoText] = useState<string>(todo.text);
-  const [editingText, setEditingText] = useState<boolean>(false);
+export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
+  todo: Todo;
+  toggleTodoState: (timestamp: number) => void;
+  editTodo: (timestamp: number, newText: string) => void;
+  deleteTodo: (timestamp: number) => void;
+}) {
+  const [todoText, setTodoText] = useState(todo.text);
+  const [editingText, setEditingText] = useState(false);
 
   const textInput = useRef<HTMLInputElement>(null);
 
