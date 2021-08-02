@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import type { Todo } from '../interfaces';
 import { ENTER_KEY, ESCAPE_KEY } from '../constants';
@@ -39,18 +39,17 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
   const handleBlur = (): void => {
     submitUpdatedTodo();
     setEditingText(false);
-    setTodoText(todo.text);
   }
 
   const handleEditButtonClick = (): void => {
     setEditingText(true);
-    window.setTimeout(() => {
-      if (textInput.current !== null) {
-        console.log(textInput.current);
-        textInput.current.focus();
-      }
-    }, 0);
   }
+
+  useEffect(() => {
+    if (textInput.current !== null) {
+      textInput.current.focus();
+    }
+  }, [editingText]);
 
   return (
     <div className={classNames}>
@@ -66,14 +65,14 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
 
         {editingText
           ? (
-        <input
-          className='TodoItem-checkboxAndText-text-editInput'
+            <input
+              className='TodoItem-checkboxAndText-text-editInput'
               type='input'
-          aria-label='Edit todo text'
-          value={todoText}
-          ref={textInput}
-          onChange={e => setTodoText(e.target.value)}
-          onKeyDown={e => handleKeyDown(e)}
+              aria-label='Edit todo text'
+              value={todoText}
+              ref={textInput}
+              onChange={e => setTodoText(e.target.value)}
+              onKeyDown={e => handleKeyDown(e)}
               onBlur={handleBlur}
             />)
           : (
@@ -105,12 +104,3 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
     </div>
   );
 }
-
-interface ITodoItemProps {
-  todo: Todo;
-  toggleTodoState: (timestamp: number) => void;
-  editTodo: (timestamp: number, newText: string) => void;
-  deleteTodo: (timestamp: number) => void;
-}
-
-export { TodoItem }
