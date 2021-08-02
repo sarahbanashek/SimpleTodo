@@ -22,18 +22,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // const active: Todo[] = [];
-    // const completed: Todo[] = [];
-    // for (const todo of allTodos) {
-    //   if (todo.completed) {
-    //     completed.push(todo);
-    //   } else {
-    //     active.push(todo);
-    //   }
-    // }
-    // setActiveTodos(active);
-    // setCompletedTodos(completed);
-
     setActiveTodos(allTodos.filter(t => !t.completed));
     setCompletedTodos(allTodos.filter(t => t.completed));
   }, [allTodos]);
@@ -53,11 +41,6 @@ function App() {
   }
 
   const markAllComplete = (): void => {
-    // const updatedTodos = activeTodos.map(todo => {
-    //   todo.completed = true;
-    //   return todo;
-    // }).concat(completedTodos);
-    // updateStateAndStorage(updatedTodos);
     updateStateAndStorage(allTodos.map(todo => ({ ...todo, completed: true })));
   }
 
@@ -86,8 +69,7 @@ function App() {
   }
 
   const deleteTodo = (timestamp: number): void => {
-    const remainingTodos = allTodos.filter(todo => todo.timestamp !== timestamp);
-    updateStateAndStorage(remainingTodos); // *
+    updateStateAndStorage(allTodos.filter(todo => todo.timestamp !== timestamp));
   }
 
   const deleteAllCompleted = (): void => {
