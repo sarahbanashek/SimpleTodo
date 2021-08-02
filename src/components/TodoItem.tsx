@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 import type { Todo } from '../interfaces';
+import { ENTER_KEY, ESCAPE_KEY } from '../constants';
 
 export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
   todo: Todo;
@@ -24,14 +25,14 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
   }
 
   const handleKeyDown = (event: React.KeyboardEvent): void => {
-    if (event.key !== ESCAPE_KEY && event.key !== ENTER_KEY) {
-      return;
-    } else if (event.key === ENTER_KEY) {
+    if (event.key === ENTER_KEY) {
       event.preventDefault();
 
       submitUpdatedTodo();
       setEditingText(false);
+    } else if (event.key === ESCAPE_KEY) {
       setTodoText(todo.text);
+      setEditingText(false);
     }
   }
 
