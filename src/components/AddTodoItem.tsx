@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import { ENTER_KEY } from '../constants';
 
-function AddTodoItem({ addTodo }: IAddTodoItemProps) {
-  const [newTodo, setNewTodo] = useState<string>('');
+export function AddTodoItem({ addTodo }: { addTodo: (val: string) => void }) {
+  const [newTodo, setNewTodo] = useState('');
 
   const submitNewTodo = (): void => {
     addTodo(newTodo.trim());
@@ -37,9 +37,3 @@ function AddTodoItem({ addTodo }: IAddTodoItemProps) {
     </div>
   );
 }
-
-interface IAddTodoItemProps {
-  addTodo: (val: string) => void;
-}
-
-export { AddTodoItem };
