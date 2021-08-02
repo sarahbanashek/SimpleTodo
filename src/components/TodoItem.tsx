@@ -74,7 +74,7 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
           ref={textInput}
           onChange={e => setTodoText(e.target.value)}
           onKeyDown={e => handleKeyDown(e)}
-          onBlur={() => handleBlur()}
+              onBlur={handleBlur}
             />)
           : (
             <label
@@ -90,7 +90,7 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
         <button
           className='TodoItem-buttons-editButton icon-button'
           aria-label='Edit this todo item'
-          onClick={() => handleEditButtonClick()}
+          onClick={handleEditButtonClick}
         >
           <span className='material-icons'>edit</span>
         </button>
