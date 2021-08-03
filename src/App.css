@@ -42,6 +42,9 @@ input[type=checkbox] {
   margin-right: 10px;
 }
 
+.todo-item__text {
+  word-wrap: anywhere;
+}
 .todo-item__completed {
   text-decoration: line-through;
   color: gray;
