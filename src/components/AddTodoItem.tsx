@@ -19,9 +19,9 @@ export function AddTodoItem({ addTodo }: { addTodo: (val: string) => void }) {
   }
 
   return (
-    <div className='AddTodoItem'>
+    <div className='add-todo-item'>
       <input
-        className='AddTodoItem-input'
+        className='add-todo-item__input'
         placeholder='New task'
         onKeyDown={e => handleEnterKeyDown(e)}
         onChange={e => setNewTodo(e.target.value)}
@@ -29,6 +29,7 @@ export function AddTodoItem({ addTodo }: { addTodo: (val: string) => void }) {
       />
       <button
         type='button'
+        className='add-todo-item__add-button icon-button'
         onClick={submitNewTodo}
       >
       <span className='material-icons'>add</span>

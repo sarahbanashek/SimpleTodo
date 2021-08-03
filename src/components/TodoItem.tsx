@@ -14,9 +14,7 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
 
   const textInput = useRef<HTMLInputElement>(null);
 
-  const classNames = todo.completed
-    ? 'TodoItem TodoItem--completed'
-    : 'TodoItem TodoItem--active';
+  const classNames = `todo-item todo-item__${todo.completed ? 'completed' : 'active'}`;
   
   const submitUpdatedTodo = (): void => {
     if (todoText.trim() !== todo.text) {
@@ -53,9 +51,8 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
 
   return (
     <div className={classNames}>
-      <div className='TodoItem-checkboxAndText'>
+      <div className='todo-item__checkbox-and-text'>
         <input
-          className='TodoItem-checkboxAndText-toggleCompleted'
           id={`mark-completed-checkbox-${todo.timestamp}`}
           type='checkbox'
           aria-label='Mark todo item as completed'
@@ -66,7 +63,6 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
         {editingText
           ? (
             <input
-              className='TodoItem-checkboxAndText-text-editInput'
               type='input'
               aria-label='Edit todo text'
               value={todoText}
@@ -77,7 +73,6 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
             />)
           : (
             <label
-              className='TodoItem-checkboxAndText-text'
               htmlFor={`mark-completed-checkbox-${todo.timestamp}`}
             >
               {todoText}
@@ -85,16 +80,16 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
           )}
       </div>
 
-      <div className='TodoItem-buttons'>
+      <div className='todo-item__buttons'>
         <button
-          className='TodoItem-buttons-editButton icon-button'
+          className='icon-button'
           aria-label='Edit this todo item'
           onClick={handleEditButtonClick}
         >
           <span className='material-icons'>edit</span>
         </button>
         <button
-          className='TodoItem-buttons-delete icon-button'
+          className='icon-button'
           aria-label='Permanently delete this todo item'
           onClick={() => deleteTodo(todo.timestamp)}
         >
