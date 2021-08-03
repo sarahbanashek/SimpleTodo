@@ -11,11 +11,10 @@ export function AddTodoItem({ addTodo }: { addTodo: (val: string) => void }) {
   }
 
   const handleEnterKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key !== ENTER_KEY || newTodo === '') {
-      return;
+    if (event.key === ENTER_KEY && newTodo !== '') {
+      event.preventDefault();
+      submitNewTodo();
     }
-    event.preventDefault();
-    submitNewTodo();
   }
 
   return (
