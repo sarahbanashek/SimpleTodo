@@ -29,8 +29,7 @@ export function AddTodoItem({ addTodo }: { addTodo: (val: string) => void }) {
       />
       <button
         type='button'
-        className='AddTodoItem-addButton icon-button'
-        onClick={() => submitNewTodo()}
+        onClick={submitNewTodo}
       >
       <span className='material-icons'>add</span>
       </button>
