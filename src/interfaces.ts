@@ -1,5 +1,5 @@
 export interface Todo {
-  timestamp: number,
+  createdAt: number,
   text: string,
   completed: boolean
 }

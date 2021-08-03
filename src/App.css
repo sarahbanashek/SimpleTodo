@@ -36,15 +36,38 @@
   align-items: center;
   justify-content: space-between;
   min-width: 391px;
+  margin-bottom: 10px;
+  text-align: left;
 }
 
 input[type=checkbox] {
   margin-right: 10px;
 }
 
+.todo-item__checkbox-text-date {
+  display: flex;
+  flex-direction: row;
+}
+
+.todo-item__text-and-date {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .todo-item__text {
   word-wrap: anywhere;
 }
+
+.todo-item__date-added {
+  font-size: small;
+  color: gray;
+}
+
+.todo-item__buttons {
+  min-width: 65px;
+}
+
 .todo-item__completed {
   text-decoration: line-through;
   color: gray;

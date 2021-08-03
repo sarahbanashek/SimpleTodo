@@ -33,7 +33,7 @@ function App() {
 
   const addTodo = (newTodo: string): void => {
     const updatedTodos = [...allTodos, {
-      timestamp: Date.now(), // *createdAt
+      createdAt: Date.now(),
       text: newTodo,
       completed: false
     }];
@@ -44,9 +44,9 @@ function App() {
     updateStateAndStorage(allTodos.map(todo => ({ ...todo, completed: true })));
   }
 
-  const toggleTodoState = (timestamp: number): void => {
+  const toggleTodoState = (createdAt: number): void => {
     const updatedTodos = allTodos.map(todo => {
-      if (todo.timestamp !== timestamp) {
+      if (todo.createdAt !== createdAt) {
         return todo;
       } else {
         todo.completed = !todo.completed
@@ -56,9 +56,9 @@ function App() {
     updateStateAndStorage(updatedTodos);
   }
 
-  const editTodo = (timestamp: number, newText: string): void => {
+  const editTodo = (createdAt: number, newText: string): void => {
     const updatedTodos = allTodos.map(todo => {
-      if (todo.timestamp !== timestamp) {
+      if (todo.createdAt !== createdAt) {
         return todo;
       } else {
         todo.text = newText;
@@ -68,8 +68,8 @@ function App() {
     updateStateAndStorage(updatedTodos);
   }
 
-  const deleteTodo = (timestamp: number): void => {
-    updateStateAndStorage(allTodos.filter(todo => todo.timestamp !== timestamp));
+  const deleteTodo = (createdAt: number): void => {
+    updateStateAndStorage(allTodos.filter(todo => todo.createdAt !== createdAt));
   }
 
   const deleteAllCompleted = (): void => {
@@ -87,7 +87,7 @@ function App() {
         <div className='todo-list'>
           {showActiveTodos
             ? activeTodos.map(todo =>
-              <TodoItem key={todo.timestamp} {...{
+              <TodoItem key={todo.createdAt} {...{
                 todo,
                 toggleTodoState,
                 editTodo,
@@ -96,7 +96,7 @@ function App() {
             : null}
           {showCompletedTodos
             ? completedTodos.map(todo =>
-              <TodoItem key={todo.timestamp} {...{
+              <TodoItem key={todo.createdAt} {...{
                 todo,
                 toggleTodoState,
                 editTodo,
@@ -111,6 +111,8 @@ function App() {
       <Footer {...{
         numActive: activeTodos.length,
         numCompleted: completedTodos.length,
+        activeTodosExist: activeTodos.length > 0,
+        completedTodosExist: completedTodos.length > 0,
         showActiveTodos,
         setShowActiveTodos,
         showCompletedTodos,

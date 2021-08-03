@@ -5,9 +5,9 @@ import { ENTER_KEY, ESCAPE_KEY } from '../constants';
 
 export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
   todo: Todo;
-  toggleTodoState: (timestamp: number) => void;
-  editTodo: (timestamp: number, newText: string) => void;
-  deleteTodo: (timestamp: number) => void;
+  toggleTodoState: (createdAt: number) => void;
+  editTodo: (createdAt: number, newText: string) => void;
+  deleteTodo: (createdAt: number) => void;
 }) {
   const [todoText, setTodoText] = useState(todo.text);
   const [editingText, setEditingText] = useState(false);
@@ -18,7 +18,7 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
   
   const submitUpdatedTodo = (): void => {
     if (todoText.trim() !== todo.text) {
-      editTodo(todo.timestamp, todoText.trim());
+      editTodo(todo.createdAt, todoText.trim());
     }
   }
 
@@ -51,15 +51,16 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
 
   return (
     <div className={classNames}>
-      <div className='todo-item__checkbox-and-text'>
+      <div className='todo-item__checkbox-text-date'>
         <input
-          id={`mark-completed-checkbox-${todo.timestamp}`}
+          id={`mark-completed-checkbox-${todo.createdAt}`}
           type='checkbox'
           aria-label='Mark todo item as completed'
           checked={todo.completed}
-          onChange={() => toggleTodoState(todo.timestamp)}
+          onChange={() => toggleTodoState(todo.createdAt)}
         />
 
+        <div className='todo-item__text-and-date'>
         {editingText
           ? (
             <input
@@ -73,11 +74,15 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
             />)
           : (
             <label
-              htmlFor={`mark-completed-checkbox-${todo.timestamp}`}
+                htmlFor={`mark-completed-checkbox-${todo.createdAt}`}
+                className='todo-item__text'
             >
               {todoText}
             </label>
           )}
+          
+          <span className='todo-item__date-added'>added {(new Date(todo.createdAt)).toLocaleString()}</span>
+        </div>
       </div>
 
       <div className='todo-item__buttons'>
@@ -91,7 +96,7 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
         <button
           className='icon-button'
           aria-label='Permanently delete this todo item'
-          onClick={() => deleteTodo(todo.timestamp)}
+          onClick={() => deleteTodo(todo.createdAt)}
         >
           <span className='material-icons'>delete_forever</span>
         </button>
