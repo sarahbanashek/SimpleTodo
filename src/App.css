@@ -69,8 +69,11 @@ input[type=checkbox] {
 }
 
 .todo-item__completed {
-  text-decoration: line-through;
   color: gray;
+}
+
+.todo-item__text__completed {
+  text-decoration: line-through;
 }
 
 hr {

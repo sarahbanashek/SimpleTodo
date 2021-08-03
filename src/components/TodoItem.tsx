@@ -13,8 +13,6 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
   const [editingText, setEditingText] = useState(false);
 
   const textInput = useRef<HTMLInputElement>(null);
-
-  const classNames = `todo-item todo-item__${todo.completed ? 'completed' : 'active'}`;
   
   const submitUpdatedTodo = (): void => {
     if (todoText.trim() !== todo.text) {
@@ -50,7 +48,7 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
   }, [editingText]);
 
   return (
-    <div className={classNames}>
+    <div className={`todo-item todo-item__${todo.completed ? 'completed' : 'active'}`}>
       <div className='todo-item__checkbox-text-date'>
         <input
           id={`mark-completed-checkbox-${todo.createdAt}`}
@@ -75,7 +73,7 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
           : (
             <label
                 htmlFor={`mark-completed-checkbox-${todo.createdAt}`}
-                className='todo-item__text'
+                className={`todo-item__text todo-item__text__${todo.completed ? 'completed' : 'active'}`}
             >
               {todoText}
             </label>
