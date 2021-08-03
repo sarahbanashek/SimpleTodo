@@ -51,7 +51,7 @@ function Footer({ numActive, numCompleted, showActiveTodos, setShowActiveTodos, 
             <button
               type='button'
               className='footer__buttons-container__button'
-              onClick={() => markAllComplete()}
+              onClick={markAllComplete}
             >
               <span>Mark all as complete</span>
               <span className='footer__buttons-container__button-icon material-icons'>done</span>
@@ -63,7 +63,7 @@ function Footer({ numActive, numCompleted, showActiveTodos, setShowActiveTodos, 
             <button
               type='button'
               className='footer__buttons-container__button'
-              onClick={() => deleteAllCompleted()}
+              onClick={deleteAllCompleted}
             >
               <span className='Footer-deleteAllCompleted-text'>Delete all completed</span>
               <span className='Footer-button-icon material-icons'>delete_forever</span>
