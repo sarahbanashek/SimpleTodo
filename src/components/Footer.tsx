@@ -1,6 +1,24 @@
 import React from 'react';
 
-function Footer({ numActive, numCompleted, showActiveTodos, setShowActiveTodos, showCompletedTodos, setShowCompletedTodos, markAllComplete, deleteAllCompleted }: IFooterProps) {
+export function Footer({
+  numActive,
+  numCompleted,
+  showActiveTodos,
+  setShowActiveTodos,
+  showCompletedTodos,
+  setShowCompletedTodos,
+  markAllComplete,
+  deleteAllCompleted
+}: {
+  numActive: number,
+  numCompleted: number,
+  showActiveTodos: boolean,
+  setShowActiveTodos: React.Dispatch<React.SetStateAction<boolean>>,
+  showCompletedTodos: boolean,
+  setShowCompletedTodos: React.Dispatch<React.SetStateAction<boolean>>,
+  markAllComplete: () => void,
+  deleteAllCompleted: () => void
+}) {
   return (
     <div className='footer'>
       <div className='footer__todo-counts footer__row-container'>
@@ -73,16 +91,3 @@ function Footer({ numActive, numCompleted, showActiveTodos, setShowActiveTodos, 
     </div>
   );
 }
-
-interface IFooterProps {
-  numActive: number,
-  numCompleted: number,
-  showActiveTodos: boolean,
-  setShowActiveTodos: React.Dispatch<React.SetStateAction<boolean>>,
-  showCompletedTodos: boolean,
-  setShowCompletedTodos: React.Dispatch<React.SetStateAction<boolean>>,
-  markAllComplete: () => void,
-  deleteAllCompleted: () => void
-}
-
-export { Footer }
