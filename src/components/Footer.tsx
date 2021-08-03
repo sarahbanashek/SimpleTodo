@@ -3,6 +3,8 @@ import React from 'react';
 export function Footer({
   numActive,
   numCompleted,
+  activeTodosExist,
+  completedTodosExist,
   showActiveTodos,
   setShowActiveTodos,
   showCompletedTodos,
@@ -12,6 +14,8 @@ export function Footer({
 }: {
   numActive: number,
   numCompleted: number,
+  activeTodosExist: boolean,
+  completedTodosExist: boolean,
   showActiveTodos: boolean,
   setShowActiveTodos: React.Dispatch<React.SetStateAction<boolean>>,
   showCompletedTodos: boolean,
@@ -32,7 +36,7 @@ export function Footer({
       </div>
 
       <div className='footer__toggle-show footer__row-container'>
-        {numActive > 0
+        {activeTodosExist
           ? (
             <div className='footer__toggle-show--active'>
               <input
@@ -47,7 +51,7 @@ export function Footer({
             </div>)
           : null}
 
-        {numCompleted > 0
+        {completedTodosExist
           ? (
             <div className='footer__toggle-show--completed'>
               <input
@@ -64,7 +68,7 @@ export function Footer({
       </div>
 
       <div className='footer__buttons-container footer__row-container'>
-        {showActiveTodos && numActive > 0
+        {showActiveTodos && activeTodosExist
           ? (
             <button
               type='button'
@@ -76,7 +80,7 @@ export function Footer({
             </button>
           ) : null}
 
-        {showCompletedTodos && numCompleted > 0
+        {showCompletedTodos && completedTodosExist
           ? (
             <button
               type='button'
