@@ -79,7 +79,13 @@ export function TodoItem({ todo, toggleTodoState, editTodo, deleteTodo }: {
             </label>
           )}
           
-          <span className='todo-item__date-added'>added {(new Date(todo.createdAt)).toLocaleString()}</span>
+          <div className='todo-item__dates'>
+            <span className='todo-item__date-added'>added {(new Date(todo.createdAt)).toLocaleString()}</span>
+            {todo.completedAt
+              ? <span className='todo-item__date-completed'>completed {(new Date(todo.completedAt)).toLocaleString()}</span>
+              : null
+            }
+          </div>
         </div>
       </div>
 

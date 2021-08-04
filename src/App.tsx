@@ -41,7 +41,14 @@ function App() {
   }
 
   const markAllComplete = (): void => {
-    updateStateAndStorage(allTodos.map(todo => ({ ...todo, completed: true })));
+    const completedTimestamp = Date.now();
+    updateStateAndStorage(allTodos.map(todo => {
+      if (todo.completed) {
+        return todo;
+      } else {
+        return { ...todo, completed: true, completedAt: completedTimestamp };
+      }
+    }));
   }
 
   const toggleTodoState = (createdAt: number): void => {
@@ -49,7 +56,13 @@ function App() {
       if (todo.createdAt !== createdAt) {
         return todo;
       } else {
-        todo.completed = !todo.completed
+        if (todo.completed) {
+          todo.completed = false;
+          todo.completedAt = undefined;
+        } else {
+          todo.completed = true;
+          todo.completedAt = Date.now();
+        }
         return todo;
       }
     });

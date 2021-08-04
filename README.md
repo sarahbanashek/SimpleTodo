@@ -4,7 +4,7 @@ This simple todo app allows users to add, edit, and mark their todo tasks as com
 
 [Check out the app on Vercel!](https://simple-todo-sarahbanashek.vercel.app/)
 
-![Todo app with a couple of tasks](/img/todo-app1.png)
+![Todo app with a couple of tasks](/img/todo-app2.png)
 
 ---
 

@@ -59,9 +59,20 @@ input[type=checkbox] {
   word-wrap: anywhere;
 }
 
-.todo-item__date-added {
+.todo-item__dates {
   font-size: small;
   color: gray;
+  display: flex;
+}
+
+.todo-item__date-added {
+  margin-right: 20px;
+}
+
+@media (max-width: 560px) {
+  .todo-item__dates {
+    flex-direction: column;
+  }
 }
 
 .todo-item__buttons {
