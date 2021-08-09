@@ -3,7 +3,7 @@ import './App.css';
 
 import { AddTodoItem } from './components/AddTodoItem';
 import { TodoItem } from './components/TodoItem';
-import { Footer } from './components/Footer';
+import { OptionsDisplay } from './components/OptionsDisplay';
 
 import type { Todo } from './interfaces';
 import { NAMESPACE } from './constants';
@@ -95,9 +95,20 @@ function App() {
         <h1>Todos</h1>
       </header>
 
+
       <section className='todo-body'>
         <AddTodoItem {...{ addTodo }} />
+
         <div className='todo-list'>
+          <OptionsDisplay {...{
+            areTodosActive: true,
+            todoCount: activeTodos.length,
+            todosExist: activeTodos.length > 0,
+            showTodos: showActiveTodos,
+            setShowTodos: setShowActiveTodos,
+            modifyAll: markAllComplete
+          }} />
+
           {showActiveTodos
             ? activeTodos.map(todo =>
               <TodoItem key={todo.createdAt} {...{
@@ -107,6 +118,18 @@ function App() {
                 deleteTodo,
               }} />)
             : null}
+    
+          <hr />
+
+          <OptionsDisplay {...{
+            areTodosActive: false,
+            todoCount: completedTodos.length,
+            todosExist: completedTodos.length > 0,
+            showTodos: showCompletedTodos,
+            setShowTodos: setShowCompletedTodos,
+            modifyAll: deleteAllCompleted
+          }} />
+          
           {showCompletedTodos
             ? completedTodos.map(todo =>
               <TodoItem key={todo.createdAt} {...{
@@ -118,21 +141,6 @@ function App() {
             : null}
         </div>
       </section>
-
-      <hr/>
-
-      <Footer {...{
-        numActive: activeTodos.length,
-        numCompleted: completedTodos.length,
-        activeTodosExist: activeTodos.length > 0,
-        completedTodosExist: completedTodos.length > 0,
-        showActiveTodos,
-        setShowActiveTodos,
-        showCompletedTodos,
-        setShowCompletedTodos,
-        markAllComplete,
-        deleteAllCompleted
-      }} />
     </div>
   );
 }

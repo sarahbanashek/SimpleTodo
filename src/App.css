@@ -21,14 +21,44 @@
   margin-right: 5px;
 }
 
-.icon-button, .footer__buttons-container__button {
+.icon-button, .options-display__button {
   background-color: transparent;
   border: none;
 }
 
-.icon-button:hover, .footer__buttons-container__button:hover {
+.icon-button:hover, .options-display__button:hover {
   background-color: #ECEFF1;
   border-radius: 3px;
+}
+
+.options-display {
+  display: flex;
+  justify-content: space-between;
+}
+
+.options-display__button {
+  display: flex;
+  align-items: center;
+}
+
+.options-display__button__icon {
+  margin-left: 5px;
+}
+
+.options-display__button__active {
+  color: #319795;
+}
+
+.options-display__button__completed {
+  color: #E53E3E;
+}
+
+.options-display__button:disabled {
+  color: gray;
+}
+
+.options-display__button:disabled:hover {
+  background-color: #eceff180;
 }
 
 .todo-item {
@@ -90,26 +120,4 @@ input[type=checkbox] {
 hr {
   border: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.footer {
-  margin-bottom: 25px;
-  font-size: small;
-}
-
-.footer__row-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 26px;
-  margin: 5px auto;
-}
-
-.footer__buttons-container__button {
-  display: flex;
-  align-items: center;
-}
-
-.footer__buttons-container__button-icon {
-  margin-left: 5px;
 }
